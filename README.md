@@ -141,7 +141,13 @@ Free GitHub Pages hosting needs a public repository. To show the map on the Cent
 
 ## Copying the project to Stephen's account
 
-Either transfer the repository (**Settings › General › Transfer ownership**), or have Stephen open it on GitHub and click **Fork** (or **Use this template** if it's marked as a template). He then turns on GitHub Pages in his copy as above.
+1. Signed in to GitHub as Stephen, open `github.com/Codehistoria/ecw-sieges-map`, click **Fork**, leave the owner as his account and click **Create fork**.
+2. In the copy, turn on GitHub Pages as above. A fork doesn't publish a website until this is done.
+3. In the copy's `config/config.json`, under `viewCount`, change `countOn` to his address (`<his-account>.github.io`), otherwise his copy counts no views. Keep `namespace` as it is to carry on the same total, or change it to start a fresh count.
+
+The checker and to-do page work out which repository they're in from the web address, so nothing else needs changing. Changes made in the original afterwards reach the copy only when Stephen clicks **Sync fork** on his repository's page.
+
+Alternatively, transfer the repository outright (**Settings › General › Transfer ownership**). The old `codehistoria.github.io` address then stops working, so do this before the Centre links to the map.
 
 ## Trying it on your own computer
 

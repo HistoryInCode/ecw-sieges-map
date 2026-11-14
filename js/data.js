@@ -6,6 +6,15 @@
 
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+  // Which GitHub repository the site comes from. On a GitHub Pages address (<account>.github.io/<repository>/)
+  // it is read from the address itself, so a copy (fork) of the project finds its own files with no setting
+  // to change; anywhere else (e.g. a local copy) it falls back to "github": { "repo" } in the settings file.
+  function githubRepo(cfg) {
+    const host = location.hostname, seg = location.pathname.split("/").filter(Boolean)[0];
+    if (/\.github\.io$/i.test(host) && seg && !/\.html?$/i.test(seg)) return `${host.split(".")[0]}/${seg}`;
+    return ((cfg && cfg.github) || {}).repo || "";
+  }
+
   async function fetchText(url, encoding) {
     const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) throw new Error(`Couldn't load ${url} (${res.status}). Check the file name and folder.`);
@@ -223,5 +232,5 @@
     return `${fmtOne(s)} – ${fmtOne(e)}`;
   }
 
-  window.SiegeData = { fetchText, loadConfig, loadStories, loadSteps, parseCSV, buildRecords, imageURL, fmtOne, fmtRange, parseDate };
+  window.SiegeData = { fetchText, githubRepo, loadConfig, loadStories, loadSteps, parseCSV, buildRecords, imageURL, fmtOne, fmtRange, parseDate };
 })();

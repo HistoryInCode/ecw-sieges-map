@@ -148,8 +148,8 @@
 </main>
 
 <script src="js/vendor/papaparse.min.js"></script>
-<script src="js/data.js?v=20261108-21"></script>
-<script src="js/views.js?v=20261108-21"></script>
+<script src="js/data.js?v=20261114-1"></script>
+<script src="js/views.js?v=20261114-1"></script>
 <script>
 (async function () {
   "use strict";
@@ -185,7 +185,7 @@
     const parsed = parseCSV(text);
     const { records, problems } = buildRecords(parsed.data, cfg);
     const byId = new Map(records.map(d => [d.id, d]));
-    const gh = cfg.github || {}, repo = gh.repo, branch = gh.branch || "main";
+    const gh = cfg.github || {}, repo = SiegeData.githubRepo(cfg), branch = gh.branch || "main";
     const ghFile = (path, how) => repo ? `https://github.com/${repo}/${how || "blob"}/${branch}/${path}` : path;
     if (repo) $("ghLinks").innerHTML = `<a href="https://github.com/${esc(repo)}" target="_blank" rel="noopener">The project on GitHub ↗</a>`;
     const SIDE = Object.fromEntries((cfg.sides || []).map((s, i) => ["s" + i, s.value]));
