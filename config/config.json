@@ -16,7 +16,7 @@
 
   "github": {
     "_help": "Where the project lives on GitHub. The checker and to-do page use this to list the photos folder. On a github.io address they work it out from the address, so a copy (fork) needs no change here; this is used when running a copy on your own computer.",
-    "repo": "Codehistoria/ecw-sieges-map",
+    "repo": "HistoryInCode/ecw-sieges-map",
     "branch": "main"
   },
 
