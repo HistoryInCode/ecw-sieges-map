@@ -87,7 +87,7 @@
     "namespace": "codehistoria-ecw-sieges-map",
     "key": "map-views",
     "goatcounter": "",
-    "countOn": ["codehistoria.github.io"],
+    "countOn": ["historyincode.github.io"],
     "showOnMap": true,
     "since": "November 2026",
     "label": "Viewed {n} times{since}"
