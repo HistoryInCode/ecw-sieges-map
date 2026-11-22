@@ -83,10 +83,10 @@
 
   "viewCount": {
     "_help": "Counts one view per visit and shows the total under the map's footer. service: 'abacus' (no sign-up needed), 'goatcounter' (free account; put its site code in 'goatcounter') or 'none' to switch off. 'showOnMap' false hides the total from visitors (it still shows on the to-do page). countOn: only count on these web addresses (leave empty to count anywhere except a local copy).",
-    "service": "goatcounter",
+    "service": "abacus",
     "namespace": "historyincode",
     "key": "map-views",
-    "goatcounter": "https://historyincode.goatcounter.com/count",
+    "goatcounter": "",
     "countOn": ["historyincode.github.io"],
     "showOnMap": true,
     "since": "November 2026",
