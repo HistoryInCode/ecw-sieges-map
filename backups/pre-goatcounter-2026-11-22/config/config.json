@@ -1,0 +1,174 @@
+{
+  "_help": "Settings for the siege map. Edit the values, keep the quotes and commas. Every setting is explained in config/README.md. If the map shows 'Settings file has a mistake', check for a missing comma or quote near the line it names.",
+
+  "text": {
+    "eyebrow": "Britain & Ireland · 1640–1654",
+    "title": "Sieges of the",
+    "titleHighlight": "Civil Wars",
+    "intro": "Every town, castle, church and great house besieged in the wars of the three kingdoms. Pick a story, a year or a side, then click a siege to read about it.",
+    "footer": "Data: Stephen Charnock and National Civil War Centre, Newark. Dates are Old Style (Julian calendar), with the year taken to begin on 1 January rather than 25 March; “approx.” durations are the source's estimates.",
+    "searchPlaceholder": "Find a place or county",
+    "startHereButton": "New here? The story of the wars",
+    "startHereNote": "Thirteen sieges, 1642–1652 · about five minutes",
+    "helpLink": "How to use this map",
+    "storiesIntro": "A story picks out the sieges that share a thread: how they ended, a campaign, a commander, a theme. Choose one and the map shows only those sieges, with an account of what links them. Then follow the story to visit each siege in turn."
+  },
+
+  "github": {
+    "_help": "Where the project lives on GitHub. The checker and to-do page use this to list the photos folder. On a github.io address they work it out from the address, so a copy (fork) needs no change here; this is used when running a copy on your own computer.",
+    "repo": "HistoryInCode/ecw-sieges-map",
+    "branch": "main"
+  },
+
+  "data": {
+    "sieges": "data/sieges.csv",
+    "cities": "data/cities.csv",
+    "coastline": "data/basemap/coastline.geojson",
+    "rivers": "data/basemap/rivers.geojson",
+    "stories": "data/stories.csv",
+    "storySteps": "data/story-steps.csv",
+    "encoding": "auto"
+  },
+
+  "columns": {
+    "id": "ID",
+    "place": "Place",
+    "county": "County",
+    "country": "Country",
+    "start": "Start Date",
+    "end": "End Date",
+    "duration": "Duration",
+    "attacker": "MAP Attacker",
+    "defender": "MAP Defender",
+    "outcome": "MAP Outcome",
+    "story": "Themes",
+    "tags": "Tags",
+    "headline": "Headline",
+    "body": "Body Text",
+    "website": "Website",
+    "image": "Image 1",
+    "caption": "Caption Image 1",
+    "image2": "Image 2",
+    "caption2": "Caption Image 2",
+    "latitude": "Latitude",
+    "longitude": "Longitude"
+  },
+
+  "dates": {
+    "_help": "How dates are written in the spreadsheet: 'year-first' (1644/7/2), 'day-first' (2/7/1644) or 'auto' to accept both.",
+    "format": "auto"
+  },
+
+  "images": {
+    "folder": "images/",
+    "showInPopup": true,
+    "showInHover": false
+  },
+
+  "sides": [
+    { "value": "Parliamentarians", "label": "Parliament", "plural": "Parliamentarians", "colour": "#24508f" },
+    { "value": "Royalists", "label": "Royalists", "plural": "Royalists", "colour": "#b0202e" },
+    { "value": "Scots", "label": "Scots", "plural": "the Scots", "colour": "#e0ad1f" }
+  ],
+
+  "help_help": "The 'How to use this map' guide: one step per part of the page. 'target' is the part to point at (#map, #storiesBox, #hist, #sides, #sizeToggle, #search, #resetAll); add, remove, reorder or reword freely.",
+  "help": [
+    { "target": "#map", "title": "The map", "text": "Each circle is a siege, coloured by the side that prevailed: blue for Parliament, red for the Royalists, yellow for the Scots. A number means several sieges at one place. Click a circle to read about it, and zoom in to see the names." },
+    { "target": "#storiesBox", "title": "Stories", "text": "Open Stories to pick a thread: how sieges ended, a campaign, a commander or a theme. The map shows only those sieges, with an account of what links them, and Follow the story takes you through them one at a time." },
+    { "target": "#hist", "title": "Sieges begun, by year", "text": "Click a year to see only the sieges that began then, or press Play to watch the wars unfold year by year." },
+    { "target": "#sides", "title": "Who prevailed", "text": "Untick a side to hide the sieges it won. Underneath, you can size the circles by how long each siege lasted." },
+    { "target": "#search", "title": "Find a siege", "text": "Search for a place or a county, or sort the list by length, date or name. Click any entry to fly to it on the map." },
+    { "target": "#resetAll", "title": "Show all sieges", "text": "Clears every story, year, side and search and takes you back to the whole map. It stays at the top of the panel as you scroll." }
+  ],
+
+  "viewCount": {
+    "_help": "Counts one view per visit and shows the total under the map's footer. service: 'abacus' (no sign-up needed), 'goatcounter' (free account; put its site code in 'goatcounter') or 'none' to switch off. 'showOnMap' false hides the total from visitors (it still shows on the to-do page). countOn: only count on these web addresses (leave empty to count anywhere except a local copy).",
+    "service": "abacus",
+    "namespace": "historyincode",
+    "key": "map-views",
+    "goatcounter": "",
+    "countOn": ["historyincode.github.io"],
+    "showOnMap": true,
+    "since": "November 2026",
+    "label": "Viewed {n} times{since}"
+  },
+
+  "tours": {
+    "_help": "How a story's tour looks. Each story picks 'visit' or 'route' in the Tour column of data/stories.csv; 'default' is used when that column is empty. The fade settings run from 0 (invisible) to 1 (full strength).",
+    "default": "visit",
+    "fadeVisited": 0.5,
+    "fadeStillToCome": 0.25
+  },
+
+  "stories_help": "Stories now come from data/stories.csv (see config/README.md). This list is only used if data.stories is removed.",
+  "stories": [
+    { "value": "Longest", "label": "Longest", "sort": "long" },
+    { "value": "Bloodiest", "label": "Bloodiest", "sort": "date" },
+    { "value": "Women", "label": "Women", "sort": "date" },
+    { "value": "Must Read", "label": "Must Read", "sort": "date" },
+    { "value": "Royalist Best", "label": "Royalist Best", "sort": "date" },
+    { "value": "Parliamentarian Best", "label": "Parliamentarian Best", "sort": "date" }
+  ],
+
+  "years": {
+    "from": 1640,
+    "to": 1654,
+    "bands": [
+      { "label": "Bishops'", "from": 1640, "to": 1641 },
+      { "label": "First Civil War", "from": 1642, "to": 1646 },
+      { "label": "Second", "from": 1647, "to": 1648 },
+      { "label": "Third", "from": 1649, "to": 1651 },
+      { "label": "Later", "from": 1652, "to": 1654 }
+    ],
+    "playSecondsPerYear": 1.6
+  },
+
+  "list": {
+    "defaultSort": "long",
+    "showFirst": 40
+  },
+
+  "map": {
+    "startView": { "south": 49.9, "west": -5.8, "north": 55.2, "east": 1.8 },
+    "minZoom": 5,
+    "maxZoom": 12,
+    "startHereStory": "Start here",
+    "zoomWhenSiegeChosen": 8,
+    "groupSiegesWithinKm": 0.6,
+    "markerScale": 1.0,
+    "uniformSize": 12,
+    "sizeByLengthAtStart": false,
+    "showRivers": true,
+    "showCities": true,
+    "showCitiesAtStart": true,
+    "showTownsAtStart": true,
+    "fadeTownsWhenFiltered": true,
+    "smallTownsFromZoom": 6.75,
+    "townsFromZoom": 7.5,
+    "siegeNamesFromZoom": 8,
+    "allSiegeNamesFromZoom": 9,
+    "showCompass": true,
+    "showTitleBox": true,
+    "titleBox": { "title": "A Mapp of the Sieges", "subtitle": "IN THE LATE WARRES · MDCXL–MDCLIV" },
+    "labels": [
+      { "text": "The German Ocean", "lat": 54.3, "lng": 2.0, "style": "sea" },
+      { "text": "The British Channel", "lat": 50.1, "lng": -1.6, "style": "sea" },
+      { "text": "St George's Channel", "lat": 52.0, "lng": -5.6, "style": "sea" },
+      { "text": "The Irish Sea", "lat": 53.85, "lng": -5.1, "style": "sea" },
+      { "text": "Wales", "lat": 52.35, "lng": -3.75, "style": "country" },
+      { "text": "Scotland", "lat": 56.7, "lng": -4.2, "style": "country" },
+      { "text": "Ireland", "lat": 53.1, "lng": -8.0, "style": "country" },
+      { "text": "England", "lat": 52.75, "lng": -1.6, "style": "country" }
+    ]
+  },
+
+  "colours": {
+    "paper": "#efe5ca",
+    "paperDeep": "#e3d4ad",
+    "inlay": "#f8f2e2",
+    "ink": "#2a2017",
+    "sea": "#cdd0bd",
+    "land": "#efe5ca",
+    "rivers": "#7c8b88"
+  }
+}
