@@ -11,7 +11,7 @@ window.SiegeViews = (function () {
   const LOCAL = /^(localhost|127\.|0\.0\.0\.0|\[?::1\]?$)/.test(location.hostname) || location.protocol === "file:";
   const SEEN = "siege-map-viewed";
   const withTimeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error("timeout")), ms))]);
-  const getJSON = url => withTimeout(fetch(url, { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))), 6000);
+  const getJSON = url => withTimeout(fetch(url, { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))), 20000);
 
   // count = true on the map itself, false on helper pages that only show the total
   async function run(vc, count) {
