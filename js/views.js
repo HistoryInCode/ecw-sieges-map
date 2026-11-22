@@ -23,13 +23,20 @@ window.SiegeViews = (function () {
       if (vc.service === "goatcounter") {
         if (!vc.goatcounter) return null;
         const base = `https://${vc.goatcounter}.goatcounter.com`;
-        if (doCount) {   // GoatCounter's own script records the visit
-          const s = document.createElement("script");
-          s.async = true; s.src = "https://gc.zgo.at/count.js"; s.dataset.goatcounter = base + "/count";
-          document.head.appendChild(s);
+        // Only the map page calls run(..., true), so only it loads the tracker.
+        // GoatCounter handles visit/session deduplication itself.
+        if (count && !LOCAL && (!vc.countOn || [].concat(vc.countOn).includes(location.hostname))) {
+          if (!document.querySelector('script[data-goatcounter="' + base + '/count"]')) {
+            const s = document.createElement("script");
+            s.async = true; s.src = "https://gc.zgo.at/count.js"; s.dataset.goatcounter = base + "/count";
+            document.head.appendChild(s);
+          }
         }
-        const j = await getJSON(`${base}/counter/TOTAL.json`);
-        return Number(String(j.count).replace(/[^\d]/g, "")) || null;
+        // Read the map page's count, not the whole site's TOTAL.
+        const path = vc.path || "/ecw-sieges-map/";
+        const j = await getJSON(`${base}/counter/${encodeURIComponent(path)}.json`);
+        const value = Number(String(j.count ?? "").replace(/[^\d]/g, ""));
+        return Number.isFinite(value) && value > 0 ? value : (value === 0 ? 0 : null);
       }
       const ns = encodeURIComponent(vc.namespace || "siege-map"), key = encodeURIComponent(vc.key || "views");
       const j = await getJSON(`https://abacus.jasoncameron.dev/${doCount ? "hit" : "get"}/${ns}/${key}`);
