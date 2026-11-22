@@ -84,7 +84,7 @@
   "viewCount": {
     "_help": "Counts one view per visit and shows the total under the map's footer. service: 'abacus' (no sign-up needed), 'goatcounter' (free account; put its site code in 'goatcounter') or 'none' to switch off. 'showOnMap' false hides the total from visitors (it still shows on the to-do page). countOn: only count on these web addresses (leave empty to count anywhere except a local copy).",
     "service": "abacus",
-    "namespace": "historyincode/ecw-sieges-map",
+    "namespace": "historyincode",
     "key": "map-views",
     "goatcounter": "",
     "countOn": ["historyincode.github.io"],
