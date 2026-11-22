@@ -3,7 +3,7 @@
    without loading the tracker. GoatCounter handles visit/session deduplication. */
 window.SiegeViews = (function () {
   "use strict";
-  const LOCAL = /^(localhost|127\.|0\.0\.0\.0|\\[?::1\\]?$)/.test(location.hostname) || location.protocol === "file:";
+  const LOCAL = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(location.hostname) || location.protocol === "file:";
   const withTimeout = (p, ms) => Promise.race([
     p,
     new Promise((_, no) => setTimeout(() => no(new Error("timeout")), ms))
