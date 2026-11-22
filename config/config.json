@@ -85,7 +85,7 @@
     "_help": "Counts visits to the map page only, using GoatCounter. The to-do page reads the same map-page total but does not load the tracker. Set 'showOnMap' to false to hide the counter on the map while continuing to count map visits and show the total on the to-do page.",
     "service": "goatcounter",
     "goatcounter": "historyincode",
-    "path": "/ecw-sieges-map/",
+    "path": "/ecw-sieges-map",
     "countOn": ["historyincode.github.io"],
     "showOnMap": true,
     "since": "November 2026",
