@@ -1,55 +1,57 @@
-/* View counter for the map.
-   Counts one view per visit (a browser tab session), and can show the running total.
-   Two services are supported, chosen in config/config.json under "viewCount":
-   - "abacus" (default): a free counting service that needs no sign-up. It stores only a number: no cookies,
-     nothing about the visitor. https://v2.jasoncameron.dev/abacus
-   - "goatcounter": a free, privacy-friendly analytics service (needs a free account and its site code). Besides
-     the total it gives a dashboard of views by day, referring sites, countries and screen sizes.
-   Nothing is counted on a local copy (localhost) or anywhere the service can't be reached; the map never waits for it. */
+/* GoatCounter integration for the siege map.
+   The map page records visits; helper pages can read the same map-only count
+   without loading the tracker. GoatCounter handles visit/session deduplication. */
 window.SiegeViews = (function () {
   "use strict";
-  const LOCAL = /^(localhost|127\.|0\.0\.0\.0|\[?::1\]?$)/.test(location.hostname) || location.protocol === "file:";
-  const SEEN = "siege-map-viewed";
-  const withTimeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error("timeout")), ms))]);
-  const getJSON = url => withTimeout(fetch(url, { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))), 20000);
+  const LOCAL = /^(localhost|127\\.|0\\.0\\.0\\.0|\\[?::1\\]?$)/.test(location.hostname) || location.protocol === "file:";
+  const withTimeout = (p, ms) => Promise.race([
+    p,
+    new Promise((_, no) => setTimeout(() => no(new Error("timeout")), ms))
+  ]);
+  const getJSON = url => withTimeout(
+    fetch(url, { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))),
+    20000
+  );
 
-  // count = true on the map itself, false on helper pages that only show the total
+  // count=true on the map page; count=false on pages that only display the total.
   async function run(vc, count) {
-    if (!vc || vc.service === "none") return null;
-    let first = false;
-    try { first = count && !sessionStorage.getItem(SEEN); if (first) sessionStorage.setItem(SEEN, "1"); } catch (e) { first = count; }
-    const doCount = first && !LOCAL && (!vc.countOn || [].concat(vc.countOn).includes(location.hostname));
+    if (!vc || vc.service !== "goatcounter" || !vc.goatcounter) return null;
+    const base = `https://${vc.goatcounter}.goatcounter.com`;
+
     try {
-      if (vc.service === "goatcounter") {
-        if (!vc.goatcounter) return null;
-        const base = `https://${vc.goatcounter}.goatcounter.com`;
-        // Only the map page calls run(..., true), so only it loads the tracker.
-        // GoatCounter handles visit/session deduplication itself.
-        if (count && !LOCAL && (!vc.countOn || [].concat(vc.countOn).includes(location.hostname))) {
-          if (!document.querySelector('script[data-goatcounter="' + base + '/count"]')) {
-            const s = document.createElement("script");
-            s.async = true; s.src = "https://gc.zgo.at/count.js"; s.dataset.goatcounter = base + "/count";
-            document.head.appendChild(s);
-          }
+      if (count && !LOCAL && (!vc.countOn || [].concat(vc.countOn).includes(location.hostname))) {
+        // Load the tracker only on the map page. GoatCounter itself handles
+        // session-based visit counting, so refreshing does not inflate visits.
+        if (!document.querySelector('script[data-goatcounter="' + base + '/count"]')) {
+          const s = document.createElement("script");
+          s.async = true;
+          s.src = "https://gc.zgo.at/count.js";
+          s.dataset.goatcounter = base + "/count";
+          document.head.appendChild(s);
         }
-        // Read the map page's count, not the whole site's TOTAL.
-        const path = vc.path || "/ecw-sieges-map/";
-        const j = await getJSON(`${base}/counter/${encodeURIComponent(path)}.json`);
-        const value = Number(String(j.count ?? "").replace(/[^\d]/g, ""));
-        return Number.isFinite(value) && value > 0 ? value : (value === 0 ? 0 : null);
       }
-      const ns = encodeURIComponent(vc.namespace || "siege-map"), key = encodeURIComponent(vc.key || "views");
-      const j = await getJSON(`https://abacus.jasoncameron.dev/${doCount ? "hit" : "get"}/${ns}/${key}`);
-      return typeof j.value === "number" ? j.value : null;
-    } catch (e) { return null; }
+
+      // Read the map's path-specific total. The To-do page calls run(..., false),
+      // so it displays this value without recording a visit of its own.
+      const path = vc.path || "/ecw-sieges-map/";
+      const j = await getJSON(`${base}/counter/${encodeURIComponent(path)}.json`);
+      if (j.count == null) return null;
+      const value = Number(String(j.count).replace(/[^\\d]/g, ""));
+      return Number.isFinite(value) ? value : null;
+    } catch (e) {
+      return null;
+    }
   }
 
-  // Writes e.g. "Viewed 1,234 times since November 2026" into an element (left empty if there's no number)
+  // Writes e.g. "Viewed 1,234 times since November 2026" into an element.
   function show(el, n, vc) {
     if (!el || n == null) return;
     const since = vc.since ? ` since ${vc.since}` : "";
-    el.textContent = (vc.label || "Viewed {n} times{since}").replace("{n}", n.toLocaleString("en-GB")).replace("{since}", since);
+    el.textContent = (vc.label || "Viewed {n} times{since}")
+      .replace("{n}", n.toLocaleString("en-GB"))
+      .replace("{since}", since);
     el.hidden = false;
   }
+
   return { run, show };
 })();
