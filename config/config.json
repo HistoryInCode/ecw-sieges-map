@@ -86,7 +86,8 @@
     "service": "goatcounter",
     "namespace": "historyincode",
     "key": "map-views",
-    "goatcounter": "",
+    "goatcounter": "https://historyincode.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js",
     "countOn": ["historyincode.github.io"],
     "showOnMap": true,
     "since": "November 2026",
